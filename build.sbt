@@ -15,8 +15,8 @@ libraryDependencies ++= Seq(
   "org.springframework.boot" % "spring-boot-starter-web" % "2.6.7",
   "org.springframework.boot" % "spring-boot-configuration-processor" % "2.6.7",
   // Swagger
- // "io.springfox" % "springfox-swagger2" % "2.9.2",
-  // "io.springfox" % "springfox-swagger-ui" % "2.9.2"
+  "io.springfox" % "springfox-swagger2" % "2.9.2",
+  "io.springfox" % "springfox-swagger-ui" % "2.9.2",
   // "org.springdoc" % "springdoc-openapi-starter-webmvc-ui" % "2.5.0",
 )
 
