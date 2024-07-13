@@ -13,7 +13,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 @EnableSwagger2
 @EnableWebMvc
 @ComponentScan(basePackages =
-  Array("com.app", "com.app.config", "com.app.controllers")
+  Array("com.app", "com.app.config", "com.app.controllers", "com.app.models")
 )
 class Application extends SpringBootServletInitializer {
   override def configure(

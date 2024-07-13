@@ -19,4 +19,11 @@ class NameController {
       @PathVariable(name = "name") name: String
   ): ResponseEntity[String] =
     ResponseEntity.ok(s"Hello ${name}")
+
+  @GetMapping(value = Array("/message"), produces = Array("application/json"))
+  def getMessage: java.util.Map[String, String] = {
+    val response = new java.util.HashMap[String, String]()
+    response.put("message", "hello")
+    response
+  }
 }

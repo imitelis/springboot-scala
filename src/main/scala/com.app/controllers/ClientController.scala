@@ -1,39 +1,116 @@
 package com.app.controllers
 
+import org.springframework.web.bind.annotation.{GetMapping, RestController}
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation._
-
-import org.springframework.http.{HttpStatus, ResponseEntity}
+import org.springframework.http._
 
 import scala.collection.mutable.ListBuffer
+import java.util.Date
 
-case class Client(id: Long, name: String, age: Int)
+import com.fasterxml.jackson.annotation.{JsonCreator, JsonProperty}
 
-@Service
+import io.circe._
+import io.circe.syntax._
+import io.circe.generic.auto._
+import io.circe.generic._
+
+import io.swagger.annotations.{
+  ApiImplicitParam,
+  ApiModelProperty,
+  ApiResponse,
+  ApiResponses,
+  ApiOperation,
+  Example,
+  ExampleProperty
+}
+
+@JsonCodec
+case class User(
+    @ApiModelProperty(value = "User ID")
+    id: Long,
+    @ApiModelProperty(value = "User name")
+    name: String,
+    @ApiModelProperty(value = "User age")
+    age: Int
+)
+
 @RestController
-@RequestMapping(Array("/api/clients"))
-class ClientController {
+@RequestMapping(Array("/api/users"))
+class UserController {
 
-  // In-memory list to store clients
-  private val clients = ListBuffer[Client]()
+  var users: ListBuffer[User] = ListBuffer(
+    User(1, "John Doe", 23),
+    User(2, "Jane Smith", 18)
+  )
 
-  @GetMapping
-  def getAllClients: Iterable[Client] = clients
+  @ApiOperation(value = "Get all users", produces = "application/json")
+  @ApiResponses(
+    Array(
+      new ApiResponse(
+        code = 200,
+        message = "Successfully retrieved list of users",
+        response = classOf[List[User]]
+      )
+    )
+  )
+  @GetMapping(produces = Array(MediaType.APPLICATION_JSON_VALUE))
+  def getAllUsers: String = {
+    users.asJson.noSpaces
+  }
 
-  @GetMapping(Array("/{id}"))
-  def getClientById(@PathVariable id: Long): ResponseEntity[Client] = {
-    clients.find(_.id == id) match {
-      case Some(client) => ResponseEntity.ok(client)
-      case None         => ResponseEntity.notFound().build()
+  @ApiOperation(value = "Get one user", produces = "application/json")
+  @ApiResponses(
+    Array(
+      new ApiResponse(
+        code = 200,
+        message = "Successfully retrieved one user",
+        response = classOf[User]
+      )
+    )
+  )
+  @GetMapping(
+    value = Array("/{id}"),
+    produces = Array(MediaType.APPLICATION_JSON_VALUE)
+  )
+  def getOneUser(@PathVariable id: Long): ResponseEntity[String] = {
+    users.find(_.id == id) match {
+      case Some(user) => ResponseEntity.ok(user.asJson.noSpaces)
+      case None       => ResponseEntity.notFound().build()
     }
   }
 
-  @PostMapping
-  @ResponseStatus(HttpStatus.CREATED)
-  def createClient(@RequestBody client: Client): Client = {
-    val nextId = if (clients.isEmpty) 1 else clients.maxBy(_.id).id + 1
-    val newClient = client.copy(id = nextId)
-    clients += newClient
-    newClient
+  @ApiOperation(value = "Delete one user", produces = "application/json")
+  @ApiResponses(
+    Array(
+      new ApiResponse(
+        code = 204,
+        message = "Successfully deleted one user"
+      )
+    )
+  )
+  @DeleteMapping(
+    path = Array("/{id}")
+  )
+  def deleteUser(@PathVariable id: Long): ResponseEntity[String] = {
+    users.indexWhere(_.id == id) match {
+      case idx if idx >= 0 =>
+        val deletedUser = users.remove(idx)
+        ResponseEntity.noContent().build()
+      case _ =>
+        ResponseEntity.notFound().build()
+    }
   }
+
 }
+
+/*
+@PostMapping(
+    produces = Array(MediaType.APPLICATION_JSON_VALUE)
+  )
+  def createUser(@RequestBody newUser: User): ResponseEntity[String] = {
+    println(s"Received request to create user: $newUser")
+    // users += newUser
+    ResponseEntity.status(HttpStatus.CREATED).body(newUser.asJson.noSpaces)
+  }
+ */
