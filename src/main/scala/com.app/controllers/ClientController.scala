@@ -1,14 +1,12 @@
 package com.app.controllers
 
+import java.util.Date
+import scala.collection.mutable.ListBuffer
+
 import org.springframework.web.bind.annotation.{GetMapping, RestController}
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation._
 import org.springframework.http._
-
-import scala.collection.mutable.ListBuffer
-import java.util.Date
-
-import com.fasterxml.jackson.annotation.{JsonCreator, JsonProperty}
 
 import io.circe._
 import io.circe.syntax._
@@ -25,15 +23,8 @@ import io.swagger.annotations.{
   ExampleProperty
 }
 
-@JsonCodec
-case class User(
-    @ApiModelProperty(value = "User ID")
-    id: Long,
-    @ApiModelProperty(value = "User name")
-    name: String,
-    @ApiModelProperty(value = "User age")
-    age: Int
-)
+import com.fasterxml.jackson.annotation.{JsonCreator, JsonProperty}
+import com.app.models.User
 
 @RestController
 @RequestMapping(Array("/api/users"))
