@@ -8,3 +8,5 @@
 - You can check Swagger documentation and interact with the APIS going to `http://localhost:8080/swagger-ui/index.html`
 
 ### Testing project
+
+- After checking all steps from previous part, run `sbt test` for running all testing
