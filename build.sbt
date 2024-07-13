@@ -14,16 +14,20 @@ libraryDependencies ++= Seq(
   // Spring Boot dependencies
   "org.springframework.boot" % "spring-boot-starter-web" % "2.6.7",
   "org.springframework.boot" % "spring-boot-configuration-processor" % "2.6.7",
+  "org.springframework.boot" % "spring-boot-devtools" % "2.6.7",
+  "org.springframework.boot" % "spring-boot-starter-test" % "2.6.7",
   // Swagger
-  "io.springfox" % "springfox-swagger2" % "2.9.2",
-  "io.springfox" % "springfox-swagger-ui" % "2.9.2",
+  "io.springfox" % "springfox-swagger2" % "3.0.0",
+  "io.springfox" % "springfox-swagger-ui" % "3.0.0",
+  "io.springfox" % "springfox-boot-starter" % "3.0.0"
   // "org.springdoc" % "springdoc-openapi-starter-webmvc-ui" % "2.5.0",
 )
 
 scalacOptions ++= Seq(
   "-unchecked",
   "-deprecation",
-  "-encoding", "utf8",
+  "-encoding",
+  "utf8",
   "-feature",
   "-language:postfixOps",
   "-language:implicitConversions"

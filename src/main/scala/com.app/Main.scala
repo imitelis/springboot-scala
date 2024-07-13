@@ -1,4 +1,4 @@
-package com
+package com.app
 
 import springfox.documentation.swagger2.annotations.EnableSwagger2
 
@@ -12,7 +12,9 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 @SpringBootApplication
 @EnableSwagger2
 @EnableWebMvc
-@ComponentScan(basePackages = Array("com", "com.config", "com.controllers"))
+@ComponentScan(basePackages =
+  Array("com.app", "com.app.config", "com.app.controllers")
+)
 class Application extends SpringBootServletInitializer {
   override def configure(
       application: SpringApplicationBuilder
