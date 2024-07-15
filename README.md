@@ -1,4 +1,4 @@
-## Scala - Springboot - Swagger - RestAPI
+## Springboot - Swagger - Scala
 
 ### Starting project
 
@@ -10,3 +10,8 @@
 ### Testing project
 
 - After checking all steps from previous part, run `sbt test` for running all testing
+
+
+### Building project
+
+- `sbt assembly` `sbt clean assembly` (work in progress)

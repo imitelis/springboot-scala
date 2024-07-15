@@ -1,7 +1,5 @@
 name := "springboot-scala"
-
 version := "1.0"
-
 scalaVersion := s"2.13.14"
 
 // Run in a separate JVM, to make sure sbt waits until all threads have
@@ -9,6 +7,17 @@ scalaVersion := s"2.13.14"
 // If you want to keep the application running while executing other
 // sbt tasks, consider https://github.com/spray/sbt-revolver/
 fork := true
+
+// Assembly
+Compile / mainClass := Some("com.app.Main")
+assembly / mainClass := Some("com.app.Main")
+
+assembly / assemblyMergeStrategy := {
+  case PathList("META-INF", xs @ _*) => MergeStrategy.discard
+  case x                             => MergeStrategy.first
+}
+
+resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/releases/"
 
 libraryDependencies ++= Seq(
   // Springboot
